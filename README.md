@@ -1,7 +1,6 @@
 GitPic
 =======
 
-http
 Make your git commit history more fun by automatically make a webcam capture for each commit you make! Captures will be saved and sorted based on project and time so you can easily browse your history. As a bonus the commit message is rendered to the captured image. Holy smokes thats awesome!
 
 ![gitpic](https://github.com/wejeus/gitpic/raw/master/capture.png)
