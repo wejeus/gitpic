@@ -1,4 +1,4 @@
 #!/bin/sh
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-/opt/local/bin/python2.7 $DIR/capture_webcam.py >/dev/null &
+$DIR/capture_webcam.py >/dev/null &
