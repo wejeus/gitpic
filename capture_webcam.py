@@ -11,7 +11,7 @@ import sys
 
 # Configuration
 OUTPUT_DIR = "~/Pictures/gitpic/"
-DEBUG = True
+DEBUG = False
 
 def capture(cameraFeed, path, message):
     fontFace = cv2.FONT_HERSHEY_SIMPLEX
