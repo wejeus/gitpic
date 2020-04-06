@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3
 
 # Author: Samuel Wejeus (samuel@isalldigital.com)
 
@@ -32,7 +32,7 @@ def capture(cameraFeed, path, message):
         position = (padding, textPosY+padding)
         # little hack to get a outline on text since opencv does not support it natively
         cv2.putText(frame, line, position, fontFace, fontScale, (0, 0, 0), thickness+2, lineType = 0)
-        cv2.putText(frame, line, position, fontFace, fontScale, (255, 255, 255), thickness, lineType = cv2.CV_AA)
+        cv2.putText(frame, line, position, fontFace, fontScale, (255, 255, 255), thickness, lineType = cv2.LINE_AA)
         textPosY = textPosY + textHeight + padding
     
     # output final image
@@ -40,34 +40,37 @@ def capture(cameraFeed, path, message):
 
 # Program ----------------------------------------------
 
-print "Running gitpic.."
+print("gitpic -> start capture..")
 
-projectBasePath = subprocess.Popen(["git", "rev-parse", "--show-toplevel"], stdout=subprocess.PIPE).communicate()[0]
-commitMessage = subprocess.Popen(["git", "log", "--format=%B", "-n", "1 HEAD"], stdout=subprocess.PIPE).communicate()[0].strip()
+projectBasePath = subprocess.Popen(["git", "rev-parse", "--show-toplevel"], stdout=subprocess.PIPE).communicate()[0].decode('ascii')
+commitMessage = subprocess.Popen(["git", "log", "--format=%B", "-n", "1 HEAD"], stdout=subprocess.PIPE).communicate()[0].strip().decode('ascii')
+print(commitMessage)
 if DEBUG:
     projectBasePath = os.path.dirname(os.path.abspath(__file__))
     commitMessage = "Debug commit message\nspanning multiple\nlines\n=)"
 
 if projectBasePath == "" or commitMessage == "":
-    print "Error: no project or message!"
+    print("Error: no project or message!")
     sys.exit(1)
 
+
 projectName = os.path.basename(projectBasePath).strip()
+print("gitpic -> project: {0}".format(projectName))
 uri = os.path.expanduser(OUTPUT_DIR + projectName + "/")
 
 # create dir if needed
 cmd_makeDirs = "mkdir -pv " + os.path.dirname(uri)
 ret = subprocess.call(cmd_makeDirs, shell=True)
 if ret != 0:
-    print "Error: could not create needed dirs!"
+    print("gitpitc: error: could not create needed dirs!")
     sys.exit(1)
 
 # prepare output filename
-filename = time.strftime("%d-%m-%Y-%H-%M") + ".png"
+filename = time.strftime("%Y-%d-%m-%H-%M") + ".png"
 imagePath = uri + filename
 
 if DEBUG:
-    print "gitpic: " + commitMessage + " -> " + imagePath
+    print("gitpic -> " + commitMessage + " -> " + imagePath)
 
 # init opencv camera
 cameraFeed = cv2.VideoCapture(0)

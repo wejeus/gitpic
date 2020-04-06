@@ -7,27 +7,21 @@ Make your git commit history more fun by automatically make a webcam capture for
 
 ## Install (Mac OSX)
 
-GitPic relies on Python and OpenCV (and its Python bindings of course). Easiest way to install required packages is to first install MacPorts (http://www.macports.org/) then from a commandline run:
+GitPic relies on Python 3 and OpenCV (and its Python bindings of course). Just install via pip3
 
-### Install OpenCV and Python bindings (Using MacPorts)
-	
-	sudo port install opencv +python27 // this will take a while..
+	$> pip3 install opencv-python
 
-### Install OpenCV and Python bindings (Using brew)
-	
-	brew install homebrew/science/opencv
-	cd /Library/Python/2.7/site-packages/
-	sudo ln -s /usr/local/Cellar/opencv/<VERSION>/lib/python2.7/site-packages/cv.py cv.py
-	sudo ln -s /usr/local/Cellar/opencv/<VERSION>/lib/python2.7/site-packages/cv2.so cv2.so
+If you have not defined it yet you need to create a template dir for git in which we will put the script and relavant hooks. When you create a new git repo the hooks defined here will be copied to your project.
 
-
-To setup git always use the GitPic hooks setup a template dir:
-
-	git config --global init.templatedir "~/.git_template"
+	$> git config --global init.templatedir "~/.git_template"
 
 Then copy the files "capture_webcam.py", "post-commit" to this folder or run the install script:
 	
-	./install.sh
+	$> ./install.sh
+
+If you already have a git repository for your project just do a re:init of the project and the new hooks will be copied
+	
+	$> git init
 
 Now every time you create a new git repository with 'git init' GitPic will automatically be installed! Whohoo! If you already have an existing git repository but still want all the GitPic goodness it is safe to run 'git init' again and git will copy any new hooks to your existing repository.
 
